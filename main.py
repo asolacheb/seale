@@ -12,6 +12,8 @@ from dotenv import load_dotenv
 #genai_api_key = os.getenv('GENAI_API_KEY')
 #genai.configure(api_key=genai_api_key)
 
+st.image("assets/logo.png", width=150)
+
 load_dotenv()
 
 def model_setup(company_name):
@@ -163,7 +165,7 @@ def main():
     st.title("Seale Comp Finder")
     company_name = st.text_input("Do comps for:")
     
-    max_retries = 3
+    max_retries = 10
     retry_delay = 5  # seconds
 
     if company_name:
