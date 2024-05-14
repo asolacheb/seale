@@ -160,7 +160,7 @@ def run_analysis(company_name):
     return df_display
 
 def main():
-    st.title("Comparable Company Analysis")
+    st.title("Seale Comp Finder")
     company_name = st.text_input("Do comps for:")
     
     max_retries = 3
