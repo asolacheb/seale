@@ -12,8 +12,6 @@ from dotenv import load_dotenv
 #genai_api_key = os.getenv('GENAI_API_KEY')
 #genai.configure(api_key=genai_api_key)
 
-st.image("assets/logo.png", width=150)
-
 load_dotenv()
 
 def model_setup(company_name):
