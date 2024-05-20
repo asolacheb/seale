@@ -183,7 +183,6 @@ def main():
         """
         <style>
         .stApp {
-            primaryColor: #183968;
             text-color:black;
             background-color: white;
             secondary-background-color:#D2D2D2;
@@ -203,7 +202,10 @@ def main():
             background-color: white;
             color: #183968;
             border: 2px solid #183968;
-        }           
+        }    
+        .stTextInput>div>div>input:focus {
+            border-color: #183968 !important;
+        }       
         </style>
         """,
         unsafe_allow_html=True
