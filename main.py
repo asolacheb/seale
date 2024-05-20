@@ -191,12 +191,15 @@ def main():
             width: 50%; 
             height: auto;
         }
+        .primary-color {
+            color: #183968;
+        }        
         </style>
         """,
         unsafe_allow_html=True
     )    
     st.image("assets/logo.png")
-    st.title("Seale Comp Finder")
+    st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
     company_name = st.text_input("Enter a brief description:")
     
     if st.button("Submit"):
