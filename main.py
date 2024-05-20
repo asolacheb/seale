@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 #genai_api_key = os.getenv('GENAI_API_KEY')
 #genai.configure(api_key=genai_api_key)
-st.image("logo.png")
+st.image("assets/logo.png")
 load_dotenv()
 
 def model_setup(company_name):
@@ -180,6 +180,7 @@ def run_analysis(company_name):
     return df_display
 
 def main():
+    st.image("assets/logo.png")
     st.title("Seale Comp Finder")
     company_name = st.text_input("Enter a brief description:")
     
