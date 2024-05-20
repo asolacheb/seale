@@ -186,9 +186,11 @@ def main():
             text-color:black;
             background-color: white;
             secondary-background-color:#D2D2D2;
-
         }
-
+        .stImage {
+            width: 50%; 
+            height: auto;
+        }
         </style>
         """,
         unsafe_allow_html=True
