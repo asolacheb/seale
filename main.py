@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 #genai_api_key = os.getenv('GENAI_API_KEY')
 #genai.configure(api_key=genai_api_key)
-
+st.image("logo.png")
 load_dotenv()
 
 def model_setup(company_name):
@@ -69,18 +69,6 @@ def model_setup(company_name):
     comps = convo.last.text
     print (comps)
     return comps
-"""
-    convo = model.start_chat(history=[
-    {
-        "role": "user",
-        "parts": [f"As 'Comp Finder', your primary task is to assist investment bankers by identifying 50 public comparable companies (comps) for {company_name} giving focus to companies that are in the same industry or sector but have the same products or services."]
-    },
-    {
-        "role": "model",
-        "parts": [f"The ticker should be using the yahoo format and only return the following data with the following format Ticker|Subindustry"]
-    },
-    ])
-"""
 
 def clean_df(comps):
     # Split the input text into lines
