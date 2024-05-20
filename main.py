@@ -193,7 +193,11 @@ def main():
         }
         .primary-color {
             color: #183968;
-        }        
+        }     
+        .stButton>button {
+            background-color: #183968;
+            color: white;
+        }   
         </style>
         """,
         unsafe_allow_html=True
