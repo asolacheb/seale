@@ -179,17 +179,8 @@ def run_analysis(company_name):
     return df_display
 
 def main():
-    st.markdown(
-        """
-        <style>
-        .stApp {
-            background-color: white;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )    
-    st.image("assets/logo.png", width=100)
+ 
+    st.image("assets/logo.png")
     st.title("Seale Comp Finder")
     company_name = st.text_input("Enter a brief description:")
     
