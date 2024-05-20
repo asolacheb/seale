@@ -197,12 +197,16 @@ def main():
         .stButton>button {
             background-color: #183968;
             color: white;
-        }   
+        }
+        .stButton>button:hover {
+            background-color: white;
+            color: #007bff;
+            border: 2px solid #183968;
+        }           
         </style>
         """,
         unsafe_allow_html=True
     )
-    st.set_page_config(layout="wide")
     st.markdown('<img src="https://raw.githubusercontent.com/asolacheb/seale/98df77634322a8b5fe8937d95b2f2530b000b808/assets/logo.png" class="logo-img">', unsafe_allow_html=True)    
     st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
     company_name = st.text_input("",placeholder="Enter a brief description")
