@@ -187,7 +187,7 @@ def main():
             background-color: white;
             secondary-background-color:#D2D2D2;
         }
-        .stImage {
+        .logo-img {
             width: 50%; 
             height: auto;
         }
@@ -201,7 +201,9 @@ def main():
         </style>
         """,
         unsafe_allow_html=True
-    )    
+    )
+    
+    st.markdown('<img src="/assets/logo.png" class="logo-img">', unsafe_allow_html=True)    
     st.image("assets/logo.png")
     st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
     company_name = st.text_input("Enter a brief description:")
