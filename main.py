@@ -189,7 +189,7 @@ def main():
         """,
         unsafe_allow_html=True
     )    
-    st.image("assets/logo.png", width=80%)
+    st.image("assets/logo.png", width=100)
     st.title("Seale Comp Finder")
     company_name = st.text_input("Enter a brief description:")
     
