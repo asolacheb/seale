@@ -6,6 +6,7 @@ import pandas as pd
 from tabulate import tabulate
 import google.generativeai as genai
 import datetime
+import time
 import re
 from dotenv import load_dotenv
 
@@ -56,30 +57,61 @@ def model_setup(company_name):
     convo = model.start_chat(history=[
     {
         "role": "user",
-        "parts": [f"##Do a 50 Public Companies Comparable to {company_name} (as of:{month} {year})"]
+        "parts": [f"As 'Comp Finder', your primary task is to assist investment bankers by identifying 50 public comparable companies (comps) for {company_name}"]
     },
     {
         "role": "model",
-        "parts": [f"Company Name 1 | Ticker | Subindustry\n. Company Name 2 | Ticker | Subindustry \n2. Company Name 3 | Ticker | Subindustry. The ticker should be in yahoo finance format and IMPORTAN Make sure to always include these three titles at the beginig Company Name, Ticker and Subindustry they are three and do not place special symbols such as *"]
+        "parts": [f"The ticker should be using the yahoo format and only return the following data with the following format Ticker|Subindustry"]
     },
     ])
 
-#"##Do a 50 Public Companies Comparable to {company_name} (as of:{month} {year}):\n\n**Company Name 1 | Ticker | Subindustry\n1. Company Name 2 | Ticker | Subindustry ** The ticker should be in yahoo finance format and Make sure to always include these three titles Company Name, Ticker and Subindustry"
- 
     convo.send_message("YOUR_USER_INPUT")
     comps = convo.last.text
+    print (comps)
     return comps
+"""
+    convo = model.start_chat(history=[
+    {
+        "role": "user",
+        "parts": [f"As 'Comp Finder', your primary task is to assist investment bankers by identifying 50 public comparable companies (comps) for {company_name} giving focus to companies that are in the same industry or sector but have the same products or services."]
+    },
+    {
+        "role": "model",
+        "parts": [f"The ticker should be using the yahoo format and only return the following data with the following format Ticker|Subindustry"]
+    },
+    ])
+"""
 
 def clean_df(comps):
+    # Split the input text into lines
     rows = comps.strip().splitlines()
-    columns = [col.strip() for col in re.findall(r'\|([^|]+)', rows[0])]
 
+    # Attempt to find the header row with columns
+    header_line = None
+    for line in rows:
+        if '|' in line:
+            header_line = line
+            break
+    
+    if not header_line:
+        raise ValueError("No valid header found with '|' delimiters")
+
+    # Extract column names
+    columns = [col.strip() for col in re.findall(r'\|([^|]+)', header_line)]
+
+    # Check for 'Ticker' and 'Subindustry' columns
+    if 'Ticker' not in columns or 'Subindustry' not in columns:
+        raise ValueError("The data returned did not contain required 'Ticker' and 'Subindustry' columns.")
+
+    # Initialize list to store data rows
     data = []
-    for row in rows[1:]:
-        row_data = re.findall(r'\|([^|]+)', row)
-        if row_data:
+    for row in rows:
+        # Extract data from rows containing '|' delimiters and matching the header format
+        if '|' in row and len(re.findall(r'\|([^|]+)', row)) == len(columns):
+            row_data = re.findall(r'\|([^|]+)', row)
             data.append([item.strip() for item in row_data])
 
+    # Create DataFrame from extracted data
     df = pd.DataFrame(data, columns=columns)
 
     # Standardize column names
@@ -90,7 +122,7 @@ def clean_df(comps):
     for col in expected_columns.values():
         if col not in df.columns:
             df[col] = None
-
+    
     return df
 
 def fetch_financials(ticker):
@@ -161,7 +193,7 @@ def run_analysis(company_name):
 
 def main():
     st.title("Seale Comp Finder")
-    company_name = st.text_input("Do comps for:")
+    company_name = st.text_input("Enter a brief description:")
     
     max_retries = 10
     retry_delay = 5  # seconds
