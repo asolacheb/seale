@@ -200,7 +200,7 @@ def main():
         }
         .stButton>button:hover {
             background-color: white;
-            color: #007bff;
+            color: #183968;
             border: 2px solid #183968;
         }           
         </style>
