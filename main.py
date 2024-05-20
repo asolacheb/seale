@@ -183,6 +183,7 @@ def main():
         """
         <style>
         .stApp {
+            primary-color:#183968;
             text-color:black;
             background-color: white;
             secondary-background-color:#D2D2D2;
@@ -199,10 +200,16 @@ def main():
             color: white;
         }   
         </style>
+        .stButton>button:hover {
+            background-color: white;
+            color: #007bff;
+            border: 2px solid #183968;
+        }        
         """,
         unsafe_allow_html=True
     )
     
+    st.set_page_config(layout="wide")
     st.markdown('<img src="https://sealeai.streamlit.app/~/+/media/9d638b84659efdc8f416113e914223679845a0196fe192eb1ba2d400.png" class="logo-img">', unsafe_allow_html=True)    
     st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
     company_name = st.text_input("",placeholder="Enter a brief description")
