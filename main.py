@@ -200,11 +200,6 @@ def main():
             color: white;
         }   
         </style>
-        .stButton>button:hover {
-            background-color: white;
-            color: #007bff;
-            border: 2px solid #183968;
-        }        
         """,
         unsafe_allow_html=True
     )
