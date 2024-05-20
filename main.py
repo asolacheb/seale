@@ -212,16 +212,12 @@ def main():
     )
     st.markdown('<img src="https://raw.githubusercontent.com/asolacheb/seale/98df77634322a8b5fe8937d95b2f2530b000b808/assets/logo.png" class="logo-img">', unsafe_allow_html=True)    
     st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
-    company_name = st.text_input("",placeholder="Enter a brief description")
     
-    if 'company_name' not in st.session_state:
-        st.session_state['company_name'] = ""
-
-    with st.form(key='input_form'):
-        company_name = st.text_input("Enter a brief description:", st.session_state['company_name'], placeholder="Enter a brief description")
+    with st.form(key='company_form'):
+        company_name = st.text_input("",placeholder="Enter a brief description")
         submit_button = st.form_submit_button(label='Submit')
-
-    if submit_button or company_name:
+    
+    if submit_button and company_name:
         st.session_state['company_name'] = company_name
         max_retries = 10
         retry_delay = 5  # seconds
