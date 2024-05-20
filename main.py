@@ -189,15 +189,11 @@ def main():
 
         }
 
-        .logo-img {
-            width: 80%;
-            height: auto;
-        }
         </style>
         """,
         unsafe_allow_html=True
     )    
-    st.markdown('<img src="assets/logo.png" class="logo-img">', unsafe_allow_html=True)
+    st.image("assets/logo.png", width=100)
     st.title("Seale Comp Finder")
     company_name = st.text_input("Enter a brief description:")
     
