@@ -204,7 +204,7 @@ def main():
             border: 2px solid #183968;
         }    
         .stTextInput>div>div>input:focus {
-            border-color: #183968 !important;
+            border-color: #007bff !important;
         }       
         </style>
         """,
@@ -212,25 +212,23 @@ def main():
     )
     st.markdown('<img src="https://raw.githubusercontent.com/asolacheb/seale/98df77634322a8b5fe8937d95b2f2530b000b808/assets/logo.png" class="logo-img">', unsafe_allow_html=True)    
     st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
+    company_name = st.text_input("",placeholder="Enter a brief description")
     
-    with st.form(key='company_form'):
-        company_name = st.text_input("",placeholder="Enter a brief description")
-        submit_button = st.form_submit_button(label='Submit')
-    
-    if submit_button and company_name:
+    if st.button("Submit"):
         st.session_state['company_name'] = company_name
         max_retries = 10
         retry_delay = 5  # seconds
 
-        for attempt in range(max_retries):
-            try:
-                df_display = run_analysis(company_name)
-                st.table(df_display)
-                break  # Exit loop if successful
-            except Exception as e:
-                time.sleep(retry_delay)
-        else:
-            st.error("Failed to fetch data after several attempts. Please try again later.")
+        if company_name:
+            for attempt in range(max_retries):
+                try:
+                    df_display = run_analysis(company_name)
+                    st.table(df_display)
+                    break  # Exit loop if successful
+                except Exception as e:
+                    time.sleep(retry_delay)
+            else:
+                st.error("Failed to fetch data after several attempts. Please try again later.")
 
 if __name__ == "__main__":
     main()
