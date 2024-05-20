@@ -203,7 +203,7 @@ def main():
         unsafe_allow_html=True
     )
     
-    st.markdown('<img src="/workspaces/seale/assets/logo.png" class="logo-img">', unsafe_allow_html=True)    
+    st.markdown('<img src="https://raw.githubusercontent.com/asolacheb/seale/98df77634322a8b5fe8937d95b2f2530b000b808/assets/logo.png" class="logo-img">', unsafe_allow_html=True)    
     st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
     company_name = st.text_input("",placeholder="Enter a brief description")
     
