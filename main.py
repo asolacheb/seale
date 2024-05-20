@@ -179,23 +179,35 @@ def run_analysis(company_name):
     return df_display
 
 def main():
-    st.image("assets/logo.png")
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-color: white;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )    
+    st.image("assets/logo.png"; width=80%)
     st.title("Seale Comp Finder")
     company_name = st.text_input("Enter a brief description:")
     
-    max_retries = 10
-    retry_delay = 5  # seconds
+    if st.button("Submit"):
+        st.session_state['company_name'] = company_name
+        max_retries = 10
+        retry_delay = 5  # seconds
 
-    if company_name:
-        for attempt in range(max_retries):
-            try:
-                df_display = run_analysis(company_name)
-                st.table(df_display)
-                break  # Exit loop if successful
-            except Exception as e:
-                time.sleep(retry_delay)
-        else:
-            st.error("Failed to fetch data after several attempts. Please try again later.")
+        if company_name:
+            for attempt in range(max_retries):
+                try:
+                    df_display = run_analysis(company_name)
+                    st.table(df_display)
+                    break  # Exit loop if successful
+                except Exception as e:
+                    time.sleep(retry_delay)
+            else:
+                st.error("Failed to fetch data after several attempts. Please try again later.")
 
 if __name__ == "__main__":
     main()
