@@ -205,7 +205,7 @@ def main():
     
     st.markdown('<img src="https://sealeai.streamlit.app/~/+/media/9d638b84659efdc8f416113e914223679845a0196fe192eb1ba2d400.png" class="logo-img">', unsafe_allow_html=True)    
     st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
-    company_name = st.text_input("Enter a brief description:", st.session_state['company_name'], placeholder="Enter a brief description")
+    company_name = st.text_input("Enter a brief description:", placeholder="Enter a brief description:")
     
     if st.button("Submit"):
         st.session_state['company_name'] = company_name
