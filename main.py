@@ -183,7 +183,7 @@ def main():
         """
         <style>
         .stApp {
-            primary-color: #183968;
+            primaryColor: #183968;
             text-color:black;
             background-color: white;
             secondary-background-color:#D2D2D2;
