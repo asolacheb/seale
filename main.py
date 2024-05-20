@@ -214,21 +214,27 @@ def main():
     st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
     company_name = st.text_input("",placeholder="Enter a brief description")
     
-    if st.button("Submit"):
+    if 'company_name' not in st.session_state:
+        st.session_state['company_name'] = ""
+
+    with st.form(key='input_form'):
+        company_name = st.text_input("Enter a brief description:", st.session_state['company_name'], placeholder="Enter a brief description")
+        submit_button = st.form_submit_button(label='Submit')
+
+    if submit_button or company_name:
         st.session_state['company_name'] = company_name
         max_retries = 10
         retry_delay = 5  # seconds
 
-        if company_name:
-            for attempt in range(max_retries):
-                try:
-                    df_display = run_analysis(company_name)
-                    st.table(df_display)
-                    break  # Exit loop if successful
-                except Exception as e:
-                    time.sleep(retry_delay)
-            else:
-                st.error("Failed to fetch data after several attempts. Please try again later.")
+        for attempt in range(max_retries):
+            try:
+                df_display = run_analysis(company_name)
+                st.table(df_display)
+                break  # Exit loop if successful
+            except Exception as e:
+                time.sleep(retry_delay)
+        else:
+            st.error("Failed to fetch data after several attempts. Please try again later.")
 
 if __name__ == "__main__":
     main()
