@@ -10,9 +10,10 @@ import time
 import re
 from dotenv import load_dotenv
 
-#genai_api_key = os.getenv('GENAI_API_KEY')
-#genai.configure(api_key=genai_api_key)
 load_dotenv()
+genai_api_key = os.getenv('GENAI_API_KEY')
+genai.configure(api_key="AIzaSyCkl3V1oMdQ4yCB2BW0_aGqLU-LOUGU22w")
+
 
 def model_setup(company_name):
     today = datetime.datetime.now()
@@ -20,7 +21,7 @@ def model_setup(company_name):
     year = today.strftime("%Y")
 
     genai_api_key = os.getenv('GENAI_API_KEY')
-    genai.configure(api_key="AIzaSyCkl3V1oMdQ4yCB2BW0_aGqLU-LOUGU22w")
+    #genai.configure(api_key="AIzaSyCkl3V1oMdQ4yCB2BW0_aGqLU-LOUGU22w")
 
 
     generation_config = {
