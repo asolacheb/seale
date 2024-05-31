@@ -9,6 +9,7 @@ import time
 import re
 from dotenv import load_dotenv
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
+from io import BytesIO
 
 load_dotenv()
 genai_api_key = os.getenv('GENAI_API_KEY')
@@ -177,6 +178,14 @@ def run_analysis(company_name):
     df_display = pd.DataFrame(all_data, columns=headers)
     return df_display
 
+def to_excel(df):
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, index=False, sheet_name='Comparable Companies')
+    writer.close()  # Use close instead of save
+    processed_data = output.getvalue()
+    return processed_data
+
 def main():
     st.markdown(
         """
@@ -217,8 +226,7 @@ def main():
         unsafe_allow_html=True
     )
 
-    st.markdown('<img src="/workspaces/seale/assets/Seale Logo.svg">', unsafe_allow_html=True)
-    st.markdown('<img src="https://raw.githubusercontent.com/asolacheb/seale/98df77634322a8b5fe8937d95b2f2530b000b808/assets/logo.png" class="logo-img">', unsafe_allow_html=True)    
+    st.markdown('<img src="https://raw.githubusercontent.com/asolacheb/seale/c05807abf90f52042e2d4cd9d2d25dd757f84d80/assets/sealelogo.svg" class="logo-img">', unsafe_allow_html=True)
     st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
     
     with st.form("company_form", clear_on_submit=True,border=False):
@@ -255,6 +263,14 @@ def main():
             height=300,
             width='100%',
             reload_data=True
+        )
+
+        excel_data = to_excel(df_display)
+        st.download_button(
+            label="Download data as Excel",
+            data=excel_data,
+            file_name='comparable_companies.xlsx',
+            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
 
 if __name__ == "__main__":
