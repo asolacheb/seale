@@ -10,6 +10,7 @@ import re
 from dotenv import load_dotenv
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 from io import BytesIO
+import xlsxwriter 
 
 load_dotenv()
 genai_api_key = os.getenv('GENAI_API_KEY')

@@ -5,3 +5,4 @@ tabulate
 google-generativeai
 python-dotenv
 streamlit-aggrid
+xlsxwriter 
