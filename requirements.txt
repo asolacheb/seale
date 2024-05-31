@@ -4,3 +4,4 @@ pandas
 tabulate
 google-generativeai
 python-dotenv
+streamlit-aggrid

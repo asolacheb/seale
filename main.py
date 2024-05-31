@@ -1,4 +1,3 @@
-#pip install streamlit yfinance pandas tabulate google.generativeai datetime python-dotenv 
 import os
 import streamlit as st
 import yfinance as yf
@@ -9,6 +8,7 @@ import datetime
 import time
 import re
 from dotenv import load_dotenv
+from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 
 load_dotenv()
 genai_api_key = os.getenv('GENAI_API_KEY')
@@ -21,8 +21,6 @@ def model_setup(company_name):
     year = today.strftime("%Y")
 
     genai_api_key = os.getenv('GENAI_API_KEY')
-    #genai.configure(api_key="AIzaSyCkl3V1oMdQ4yCB2BW0_aGqLU-LOUGU22w")
-
 
     generation_config = {
       "temperature": 0.9,
@@ -67,7 +65,7 @@ def model_setup(company_name):
 
     convo.send_message("YOUR_USER_INPUT")
     comps = convo.last.text
-    print (comps)
+    print(comps)
     return comps
 
 def clean_df(comps):
@@ -207,29 +205,57 @@ def main():
         .stTextInput>div>div>input:focus {
             border-color: #007bff !important;
         }       
+        .stTextInput>div>div {
+            border: none;
+            padding: 0;
+        }
+        .stForm>div>div {
+            border: none;
+        }
         </style>
         """,
         unsafe_allow_html=True
     )
+
+    st.markdown('<img src="/workspaces/seale/assets/Seale Logo.svg">', unsafe_allow_html=True)
     st.markdown('<img src="https://raw.githubusercontent.com/asolacheb/seale/98df77634322a8b5fe8937d95b2f2530b000b808/assets/logo.png" class="logo-img">', unsafe_allow_html=True)    
     st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
-    company_name = st.text_input("",placeholder="Enter a brief description")
     
-    if st.button("Submit"):
+    with st.form("company_form", clear_on_submit=True,border=False):
+        company_name = st.text_input("Company Name", placeholder="Enter a brief description")
+        submitted = st.form_submit_button("Submit")
+    
+    if submitted:
         st.session_state['company_name'] = company_name
         max_retries = 10
-        retry_delay = 5  # seconds
+        retry_delay = 0
+        for attempt in range(max_retries):
+            try:
+                df_display = run_analysis(company_name)
+                if not df_display.empty:
+                    st.session_state['df_display'] = df_display
+                    break
+            except Exception as e:
+                time.sleep(retry_delay)
+        else:
+            st.error("Failed to fetch data after several attempts. Please try again later.")
 
-        if company_name:
-            for attempt in range(max_retries):
-                try:
-                    df_display = run_analysis(company_name)
-                    st.table(df_display)
-                    break  # Exit loop if successful
-                except Exception as e:
-                    time.sleep(retry_delay)
-            else:
-                st.error("Failed to fetch data after several attempts. Please try again later.")
+    if 'df_display' in st.session_state:
+        df_display = st.session_state['df_display']
+        st.markdown("### Comparable Companies")
+        
+        options_builder = GridOptionsBuilder.from_dataframe(df_display)
+        grid_options = options_builder.build()
+        
+        grid_response = AgGrid(
+            df_display,
+            gridOptions=grid_options,
+            update_mode=GridUpdateMode.SELECTION_CHANGED,
+            fit_columns=True,
+            height=300,
+            width='100%',
+            reload_data=True
+        )
 
 if __name__ == "__main__":
     main()
