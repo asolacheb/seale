@@ -205,6 +205,7 @@ def main():
         }     
         .stButton>button {
             background-color: #183968;
+            text/color:white;
             color: white;
         }
         .stButton>button:hover {
@@ -236,7 +237,7 @@ def main():
     
     if submitted:
         st.session_state['company_name'] = company_name
-        max_retries = 10
+        max_retries = 100
         retry_delay = 0
         for attempt in range(max_retries):
             try:
