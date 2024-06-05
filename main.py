@@ -188,6 +188,12 @@ def to_excel(df):
     return processed_data
 
 def main():
+    st.set_page_config(
+        page_title="Seale Comp Finder",
+        page_icon="/workspaces/seale/assets/sealefavicon.png",
+        layout="wide",
+        initial_sidebar_state="expanded"
+    )
     st.markdown(
         """
         <style>
@@ -197,7 +203,7 @@ def main():
             secondary-background-color:#D2D2D2;
         }
         .logo-img {
-            width: 50%; 
+            width: 25%; 
             height: auto;
         }
         .primary-color {
@@ -227,12 +233,13 @@ def main():
         """,
         unsafe_allow_html=True
     )
+    
 
     st.markdown('<img src="https://raw.githubusercontent.com/asolacheb/seale/c05807abf90f52042e2d4cd9d2d25dd757f84d80/assets/sealelogo.svg" class="logo-img">', unsafe_allow_html=True)
     st.markdown('<h1 class="primary-color">Seale Comp Finder</h1>', unsafe_allow_html=True)
     
     with st.form("company_form", clear_on_submit=True,border=False):
-        company_name = st.text_input("Company Name", placeholder="Enter a brief description")
+        company_name = st.text_input("Description", placeholder="Enter a brief description")
         submitted = st.form_submit_button("Submit")
     
     if submitted:
